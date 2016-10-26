@@ -1,4 +1,4 @@
-// Databricks notebook source exported at Wed, 26 Oct 2016 13:45:54 UTC
+// Databricks notebook source exported at Wed, 26 Oct 2016 13:48:07 UTC
 // MAGIC %md # What's new in Spark 2?
 // MAGIC * Rerngvit Yanggratoke @ Combient AB 
 
@@ -14,10 +14,9 @@ val ss = spark
 
 // COMMAND ----------
 
-// WARNING: This notebook will save and load using the following basePath, so make sure the directory is usable.
 val tmp_folder_path = "/tmp_folder"
-dbutils.fs.rm(basePath, recurse=true)
-dbutils.fs.mkdirs(basePath)
+dbutils.fs.rm(tmp_folder_path, recurse=true)
+dbutils.fs.mkdirs(tmp_folder_path)
 
 // COMMAND ----------
 
