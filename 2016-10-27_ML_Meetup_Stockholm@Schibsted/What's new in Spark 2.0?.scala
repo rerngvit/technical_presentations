@@ -1,4 +1,4 @@
-// Databricks notebook source exported at Wed, 26 Oct 2016 12:38:51 UTC
+// Databricks notebook source exported at Wed, 26 Oct 2016 13:45:54 UTC
 // MAGIC %md # What's new in Spark 2?
 // MAGIC * Rerngvit Yanggratoke @ Combient AB 
 
@@ -14,10 +14,17 @@ val ss = spark
 
 // COMMAND ----------
 
+// WARNING: This notebook will save and load using the following basePath, so make sure the directory is usable.
+val tmp_folder_path = "/tmp_folder"
+dbutils.fs.rm(basePath, recurse=true)
+dbutils.fs.mkdirs(basePath)
+
+// COMMAND ----------
+
 // read the dataset from URL and save it to a file
 val dataset_url = "https://s3-eu-west-1.amazonaws.com/com-combient-test/ml-meetup/The_world_population_data.csv"
 val raw_data = scala.io.Source.fromURL(dataset_url).mkString.split("\n").filter(_ != "")
-val tmp_file_path = "/tmp_file_" + System.currentTimeMillis  + ".csv"
+val tmp_file_path = tmp_folder_path + "/raw_world_population.csv"
 ss.sparkContext.parallelize(raw_data).saveAsTextFile(tmp_file_path)
 val raw_df = ss.read.option("header", "true").csv(tmp_file_path)
 raw_df.printSchema
@@ -160,7 +167,7 @@ predictions.show
 
 df.stat.approxQuantile(
        col="population_2014", 
-       probabilities=Array(0.25, 0.5, 0.75, 0.9), 
+       probabilities=Array(0.25, 0.5, 0.75, 0.99), 
        relativeError=0.05)
 
 // COMMAND ----------
